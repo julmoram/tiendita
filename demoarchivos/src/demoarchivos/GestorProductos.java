@@ -26,8 +26,9 @@ public class GestorProductos {
             while ((linea = br.readLine()) != null) {
                 int precio = Integer.parseInt(linea);
                 String nombre = br.readLine();
+                int cantidad = Integer.parseInt(br.readLine());
                 if (nombre != null) {
-                    productos.add(new Producto(precio, nombre));
+                    productos.add(new Producto(precio, nombre, cantidad));
                 }
             }
         } catch (IOException e) {
@@ -39,8 +40,22 @@ public class GestorProductos {
         if (productos.isEmpty()) {
             System.out.println("La lista está vacía.");
         } else {
+            System.out.printf("%-20s %10s %10s\n", "Nombre", "Precio", "Cantidad");
+            System.out.println("--------------------------------------------");
             for (Producto producto : productos) {
                 System.out.println(producto);
+            }
+        }
+    }
+
+    public void mostrarRegistrosPares() {
+        if (productos.isEmpty()) {
+            System.out.println("La lista está vacía.");
+        } else {
+            System.out.printf("%-20s %10s %10s\n", "Nombre", "Precio", "Cantidad");
+            System.out.println("--------------------------------------------");
+            for (int i = 1; i < productos.size(); i += 2) {
+                System.out.println(productos.get(i));
             }
         }
     }
@@ -59,6 +74,8 @@ public class GestorProductos {
                 bw.write(String.valueOf(producto.getPrecio()));
                 bw.newLine();
                 bw.write(producto.getNombre());
+                bw.newLine();
+                bw.write(String.valueOf(producto.getCantidad()));
                 bw.newLine();
             }
             System.out.println("Datos guardados correctamente.");
